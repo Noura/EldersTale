@@ -11,16 +11,29 @@
     </style>
 </head>
 <body>
-
+<audio controls loop autoplay="true" style="display: none;">
+  <source src="assets/lh2.mp3" type="audio/mp3">
+</audio>
 <script type="text/javascript">
 //Part 9 of the phaser tutorial found at http://phaser.io/tutorials/making-your-first-phaser-game/index
 var game = new Phaser.Game(512, 384, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
 
-    game.load.image('sky', 'assets/bg.png');
-    game.load.image('ground', 'assets/platform.png');
+    game.load.image('sky', 'assets/newermap.png');
+    game.load.image('ground', 'assets/bluebush.PNG');
+    game.load.image('bluebush', 'assets/bluebush.PNG');
+    game.load.image('purplebush', 'assets/purplebush.PNG');
+    game.load.image('orangebush', 'assets/orangebush.PNG');
     game.load.image('star', 'assets/star.png');
+    game.load.image('building', 'assets/building.PNG');
+    game.load.image('building2', 'assets/building.PNG');
+    game.load.image('bush1', 'assets/bush1.PNG');
+    game.load.image('bush2', 'assets/bush2.PNG');
+    game.load.image('bush3', 'assets/bush3.PNG');
+    game.load.image('bush3part2', 'assets/bush3.PNG');
+    game.load.image('tree', 'assets/tree.PNG');
+    game.load.image('christmastree', 'assets/christmastree.PNG');
     game.load.spritesheet('dude', 'assets/sprite.png', 149, 199);
 
 }
@@ -41,24 +54,57 @@ function create() {
 
     //  A simple background for our game
     //game.add.sprite(0, 0, 'sky');
-    game.add.tileSprite(0,0,1920,1920,'sky');
-    game.world.setBounds(0,0,1920,1920);
+    game.add.tileSprite(0,0,1024,512,'sky');
+    game.world.setBounds(0,0,1024,512);
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
-    //platforms = game.add.group();
+    platforms = game.add.group();
 
     //  We will enable physics for any object that is created in this group
 
- //platforms.enableBody = true;
+    platforms.enableBody = true;
     // Here we create the ground.
-    //var ground = platforms.create(0, game.world.height - 64, 'ground');
+    
+    var purplebush = platforms.create(0, game.world.height - 313, 'purplebush');
+    var ground = platforms.create(0, game.world.height - 247, 'ground');
+    var orangebush = platforms.create(0, game.world.height - 170, 'orangebush');
+    var bluebush = platforms.create(0, game.world.height - 104, 'ground');
+    var building = platforms.create(270, game.world.height - 530, 'building');
+    var building2 = platforms.create(470, game.world.height - 530, 'building2');
+    var bush1 = platforms.create(418, game.world.height - 350, 'bush1');
+    var bush2 = platforms.create(610, game.world.height - 340, 'bush2');
+    var bush3 = platforms.create(270, game.world.height - 320, 'bush3');
+    var bush3part2 = platforms.create(270, game.world.height - 300, 'bush3part2');
+    var tree = platforms.create(880, game.world.height - 300, 'tree');
+    var christmastree = platforms.create(850, game.world.height - 150, 'christmastree');
 
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     //ground.scale.setTo(2, 2);
+    purplebush.scale.setTo(0.5,0.5);
+    building.scale.setTo(.4,.30);
+    building2.scale.setTo(.4,.30);
+    bush1.scale.setTo(.7,.7);
+    bush2.scale.setTo(.5,.5);
+    bush3.scale.setTo(.25,.25);
+    bush3part2.scale.setTo(.25,.25);
+    tree.scale.setTo(.6,.7);
+    christmastree.scale.setTo(.6,.7);
 
     //  This stops it from falling away when you jump on it
    
- //ground.body.immovable = true;
+    ground.body.immovable = true;
+    purplebush.body.immovable = true;
+    orangebush.body.immovable = true;
+    building.body.immovable = true;
+    bluebush.body.immovable = true;
+    building2.body.immovable = true;
+    bush1.body.immovable = true;
+    bush2.body.immovable = true;
+    bush3.body.immobavle = true;
+    bush3part2.body.immobavle = true;
+    tree.body.immovable = true;
+    christmastree.body.immovable = true;
+    
     //  Now let's create two ledges
     //var ledge = platforms.create(400, 400, 'ground');
     //ledge.body.immovable = true;
@@ -94,17 +140,17 @@ player.animations.add('up', [9, 10, 11], 10, true);
     stars.enableBody = true;
 
     //  Here we'll create 12 of them evenly spaced apart
-    for (var i = 0; i < 12; i++) // i = i + 1
+    //for (var i = 0; i < 12; i++) // i = i + 1
     {
         //  Create a star inside of the 'stars' group
-        var star = stars.create(i * 70, i * 15, 'star');
+        //var star = stars.create(i * 70, i * 15, 'star');
 
        
         //  Let gravity do its thing
-       // star.body.gravity.y = 300;
+        //star.body.gravity.y = 50;//supose to be 300
 
         //  This just gives each star a slightly random bounce value
-        star.body.bounce.y = 0.7 + Math.random() * 0.2;
+        //star.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
     //  The score
@@ -118,7 +164,7 @@ player.animations.add('up', [9, 10, 11], 10, true);
 function update() {
 
     //  Collide the player and the stars with the platforms
-    //game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(player, platforms);
     //game.physics.arcade.collide(stars, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -127,15 +173,22 @@ function update() {
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
     
-    console.log('enemy position', enemy.body.position.x,enemy.body.position.y);
-    if (enemy.body.position.x >1900){
+    //console.log('enemy position', enemy.body.position.x,enemy.body.position.y);
+    if (enemy.body.position.x >500){
       enemy.body.velocity.x=-300;
-      enemy.body.velocity.y=Math.random()*1900;
+      enemy.body.velocity.y=Math.random()*150;
     }
     if (enemy.body.position.x<0){
       enemy.body.velocity.x= 300;
-      enemy.body.velocity.y= Math.random()*1900;
-      
+      enemy.body.velocity.y= Math.random()*150;
+    }
+    if (enemy.body.position.y >500){
+      enemy.body.velocity.y=-300;
+      enemy.body.velocity.x=Math.random()*150;
+    }
+    if (enemy.body.position.y<0){
+      enemy.body.velocity.y= 300;
+      enemy.body.velocity.x= Math.random()*150;
     }
     if (cursors.left.isDown)
     {
