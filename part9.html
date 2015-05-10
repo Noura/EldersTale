@@ -115,13 +115,9 @@ function create() {
     // The player and its settings
     player = game.add.sprite(game.world.centerX, game.world.centerY, 'dude');
     game.camera.follow(player);
-    enemy = game.add.sprite(game.world.centerX, game.world.centerY, 'star');
     
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
-    game.physics.arcade.enable(enemy);
-    enemy.body.velocity.x = 300;
-    //enemy.body.velocity.y = 300;
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0;
@@ -138,6 +134,9 @@ player.animations.add('up', [9, 10, 11], 10, true);
 
     //  We will enable physics for any star that is created in this group
     stars.enableBody = true;
+    enemy = stars.create(100, 100, 'star');
+    enemy.body.velocity.x = 300;
+    game.physics.arcade.enable(enemy);
 
     //  Here we'll create 12 of them evenly spaced apart
     //for (var i = 0; i < 12; i++) // i = i + 1
