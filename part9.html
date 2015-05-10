@@ -12,8 +12,8 @@
 </head>
 <body>
 <audio controls loop autoplay="true" style="display: none;">
-  <source src="assets/lh2.wav" type="audio/wav">
-  </audio>
+  <source src="assets/lh2.mp3" type="audio/mp3">
+</audio>
 <script type="text/javascript">
 //Part 9 of the phaser tutorial found at http://phaser.io/tutorials/making-your-first-phaser-game/index
 var game = new Phaser.Game(512, 384, Phaser.AUTO, '', { preload: preload, create: create, update: update });
@@ -174,14 +174,21 @@ function update() {
     player.body.velocity.x = 0;
     
     //console.log('enemy position', enemy.body.position.x,enemy.body.position.y);
-    if (enemy.body.position.x >1900){
+    if (enemy.body.position.x >500){
       enemy.body.velocity.x=-300;
-      enemy.body.velocity.y=Math.random()*1900;
+      enemy.body.velocity.y=Math.random()*150;
     }
     if (enemy.body.position.x<0){
       enemy.body.velocity.x= 300;
-      enemy.body.velocity.y= Math.random()*1900;
-      
+      enemy.body.velocity.y= Math.random()*150;
+    }
+    if (enemy.body.position.y >500){
+      enemy.body.velocity.y=-300;
+      enemy.body.velocity.x=Math.random()*150;
+    }
+    if (enemy.body.position.y<0){
+      enemy.body.velocity.y= 300;
+      enemy.body.velocity.x= Math.random()*150;
     }
     if (cursors.left.isDown)
     {
